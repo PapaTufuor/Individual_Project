@@ -1,0 +1,140 @@
+package ICP_Project;
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.*;
+import java.io.BufferedReader;
+import java.util.ArrayList;
+
+public class Objects {
+
+    public static Airport AirportObject(String[] Airportlist) {
+        int AirportID = 0;
+        double Latitude = 0.0;
+        double Longitude = 0.0;
+        double Altitude = 0.0;
+        double timezone = 0.0;
+        String Airport_name ="";
+        String City = "";
+        String Country = "";
+        String IATA_Code ="";
+        String ICAO_Code = "";
+        String Data_source ="";
+        String Type = "";
+        String DST = "";
+        String timezone = "";
+
+
+        try{
+            AirportID = Integer.parseInt(Airportlist[0]);
+            Latitude = Double.parseDouble(Airportlist[6]);
+            Longitude = Double.parseDouble(Airportlist[7]);
+            Altitude = Double.parseDouble(Airportlist[8]);
+            timezone = Double.parseDouble(Airportlist[9]);
+        }catch (NumberFormatException nfe) {
+            System.out.println("NumberFormatException: " + nfe.getMessage());
+
+        Airport_name=Airportlist[1] + Airportlist[2];
+        City = Airportlist[3];
+        Country=Airportlist[4];
+        IATA_Code=Airportlist[5];
+        ICAO_Code=Airportlist[6];
+        DST=Airportlist[11];
+        timezone=Airportlist[12];
+        Type=Airportlist[13];
+        Data_source=Airportlist[14];
+
+        return new Airport(AirportID,Airport_name,City, Country, IATA_Code, ICAO_Code, Latitude, Longitude, Altitude, timezone, DST, timezone, Type, Data_source);
+
+        }
+
+        public static Airline AirlineObject(String[] Airlinelist) {
+            int AirlineID = 0;
+            try{
+                AirlineID= Integer.parseInt(Airlinelist[1]);
+            } catch(NumberFormatException nfe) {
+                System.out.print("NumberFormatException:" + nfe.getMessage());
+            }
+            String Airlinename = Airlinelist[1];
+            String Alias = Airlinelist[2];
+            String IATAcode = Airlinelist[3];
+            String ICAOcode = Airlinelist[4];
+            String Call_sign = Airlinelist[5];
+            String Country = Airlinelist[6];
+            String Active_state = Airlinelist[7];
+
+            return new Airline(AirlineID, Airlinename, ALias, IATAcode, ICAOcode, Call_sign, Country, Active_state);
+        }
+
+
+        public static Routes RouteObject(String[] Routelist) {
+            int AirlineID=0;
+            int SourceAirportID=0;
+            int DestinationAirportID=0;
+            int Stops =0;
+
+            try{
+                AirlineID=Integer.parseInt(Routelist[1]);
+                SourceAirportID = Integer.parseInt(Routelist[3]);
+                DestinationAirportID = Integer.parseInt(Routelist[5]);
+                Stops = Integer.parseInt(RouteList[7]);
+            } catch(NumberFormatException nfe) {
+                System.out.print("NumberFormatException:" + nfe.getMessage());
+            } catch(ArrayIndexOutOfBoundsException ofb) {
+                System.out.print("ArrayIndexOutOfBoundsException:" + ofb.getMessage());
+            }
+            String Airline_code= Routelist[0];
+            String SourceAirportCode = Routelist[2];
+            String DestinationAirportCode = Routelist[4];
+            String Codeshare = Routelist[6];
+            String Equipment = Routelist[Routelist.length - 1];
+
+            return new Routes(Airline_code,AirlineID, SourceAirportCode, SourceAirportID, DestinationAirportCode, DestinationAirportID, Codeshare, Stops, Equipment);
+
+        }
+
+
+        public static void Extracommas() {
+            BufferedReader reader = null;
+
+            try{
+                File file = new File(pathname "C:\Users\hp\Desktop\2nd sem\ICP"); 
+                reader = new BufferedReader(new FileReader(file));
+                String content;
+                String[] fieldobjects;
+                while ((content = reader.readLine())) != null){
+                    fieldobjects = content.split();
+                    if (fieldobject.length > 14) {
+                        System.out.println(fieldobjects[0]);
+                        System.out.println(content);
+                        System.out.println();
+                    }
+                }
+            }catch(FileNotFoundException fne) {
+                fne.printStackTrace();
+            }catch(IOException ie){
+                ie.printStackTrace();
+            }
+            finally{
+                try{
+                    if (reader != null)
+                        reader.close();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+
+
+
+        public static ArrayList<Integer> getAirportID(String City, String Country){
+            ArrayList<Integer> AirportID = new ArrayList<>();
+            for (Airport obj: Main.Airport_objects){
+                if(obj.getCity().equals(City) && obj.getCountry().equals(Country)){
+                    AirportID.add(obj.getAirportID());
+                }
+            }return AirportID;
+        }
+    }
+
+}

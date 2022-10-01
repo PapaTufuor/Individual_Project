@@ -1,0 +1,185 @@
+
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.*;
+import java.io.BufferedReader;
+import java.util.ArrayList;
+
+public class Objects {
+
+    public static Airport AirportObject(String[] Airportlist) {
+        int AirportID = 0;
+        double Latitude = 0.0;
+        double Longitude = 0.0;
+        double Altitude = 0.0;
+        double timezone = 0.0;
+        String Airport_name ="";
+        String City = "";
+        String Country = "";
+        String IATA_Code ="";
+        String ICAO_Code = "";
+        String Data_source ="";
+        String Type = "";
+        String DST = "";
+        String DBTZ = "";
+
+
+
+        if (Airportlist[0].equals(641) || Airportlist[0].equals(657)) ||
+                 Airportlist[0].equals(658) || Airportlist[0].equals(664)) ||
+                 Airportlist[0].equals(3256) || Airportlist[0].equals(3340)) ||
+                 Airportlist[0].equals(4345) || Airportlist[0].equals(4351)) ||
+                Airportlist[0].equals(5582) || Airportlist[0].equals(5583)) ||
+                Airportlist[0].equals(5589) || Airportlist[0].equals(6898)) || Airportlist{0}.equals(13714)) {
+            
+            try{
+                Latitude = Double.parseDouble(Airportlist[6]);
+                Longitude = Double.parseDouble(Airportlist[7]);
+            }catch (NumberFormatException nfe) {
+                }
+            
+            Airport_name= Airportlist[1]+Airporlist[2];
+            City= Airportlist[3];
+            Country=Airportlist[4];
+            IATA_Code = Airpostlist[5];
+            ICAO_Code= Airportlist[6];
+            DST= Airporlist[11];
+            DBTZ=Airportlist[12];
+            Type=Airportlist[13];
+            Data_source= Airportlist[14];
+
+            }else if (Airportlist[0].equals(5562) || Airportlist[0].equals(5674) || 
+                        Airportlist[0].equals(5675) || Airportlist[0].equals(5881)){       
+                 try{
+            AirportID = Integer.parseInt(Airportlist[0]);
+            Latitude = Double.parseDouble(Airportlist[6]);
+            Longitude = Double.parseDouble(Airportlist[7]);
+            Altitude = Double.parseDouble(Airportlist[8]);
+            timezone = Double.parseDouble(Airportlist[9]);
+        }catch (NumberFormatException nfe) {
+            System.out.println("NumberFormatException: " + nfe.getMessage());
+        }
+
+        Airport_name=Airportlist[1];
+        City = Airportlist[2] +Airportlist[3];
+        Country=Airportlist[4];
+        IATA_Code=Airportlist[5];
+        ICAO_Code=Airportlist[6];
+        DST=Airportlist[11];
+        DBTZ=Airportlist[12];
+        Type=Airportlist[13];
+        Data_source=Airportlist[14];
+        } else{
+            try{
+                AirportID= Interger.parseInt(Airportlist[0]);
+                Latitude = Double.parseDouble(Airpoprtlist[6]);
+                Longitude = Double.parseDouble(Airporlist[7]);
+                Altitude= Double.parseDouble(Airportlist[8]);
+                timezone = Double.parseDouble(Airportlist[9]);
+
+            } catch(NumberFormatException nfe) {
+
+            }
+            Airport_name=Airportlist[1];
+            City = Airportlist[2] ;
+            Country=Airportlist[3];
+            IATA_Code=Airportlist[4];
+            ICAO_Code=Airportlist[5];
+            DST=Airportlist[10];
+            DBTZ=Airportlist[11];
+            Type=Airportlist[12];
+            Data_source=Airportlist[13];
+
+
+        } 
+
+        return new Airport(AirportID,Airport_name,City, Country, IATA_Code, ICAO_Code, Latitude, Longitude, Altitude,DST, DBTZ, Type, Data_source);
+
+        }
+
+        public static Airline AirlineObject(String[] Airlinelist) {
+            int AirlineID = 0;
+            try{
+                AirlineID= Integer.parseInt(Airlinelist[1]);
+            } catch(NumberFormatException nfe) {
+                System.out.print("NumberFormatException:" + nfe.getMessage());
+            }
+            String Airlinename = Airlinelist[1];
+            String Alias = Airlinelist[2];
+            String IATAcode = Airlinelist[3];
+            String ICAOcode = Airlinelist[4];
+            String Call_sign = Airlinelist[5];
+            String Country = Airlinelist[6];
+            String Active_state = Airlinelist[7];
+
+            return new Airline(AirlineID, Airlinename, ALias, IATAcode, ICAOcode, Call_sign, Country, Active_state);
+        }
+
+
+           
+        }
+        public static Routes RouteObject(String[] Routelist) {
+            String Airline_code= Routelist[0];
+            String SourceAirportCode = Routelist[2];
+            String DestinationAirportCode = Routelist[4];
+            return new Routes(Airline_code, SourceAirportCode, DestinationAirportCode);
+
+
+        public static void Extracommas() {
+            BufferedReader reader = null;
+            int counter = 0;
+
+            try{
+                File file = new File(pathname "C:/Users/hp/Desktop/2nd sem/ICP/airports.csv"); 
+                reader = new BufferedReader(new FileReader(file));
+                String content;
+                String[] fieldobjects;
+                while ((content = reader.readLine())) != null){
+                    fieldobjects = content.split();
+                    if (fieldobject.length > 14) {
+                        counter +=1;
+                        System.out.print(("The index of an identified extra comma" + counter + "is:"));
+                        System.out.println(fieldobjects[0]);
+                        System.out.println(content);
+                        System.out.println();
+                    }
+                }
+            }catch(FileNotFoundException fne) {
+                fne.printStackTrace();
+            }catch(IOException ie){
+                ie.printStackTrace();
+            }
+            finally{
+                try{
+                    if (reader != null)
+                        reader.close();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+
+
+
+        public static ArrayList<Integer> getAirportID(String City, String Country){
+            ArrayList<Integer> AirportID = new ArrayList<>();
+            for (Airport obj: Main.Airport_objects){
+                if(obj.getCity().equals(City) && obj.getCountry().equals(Country)){
+                    AirportID.add(obj.getAirportID());
+                }
+            }return AirportID;
+
+        }
+
+        public static Airport getAirportByCode (String AirportCode){
+            Airport Airport_objects = new Airport();
+            for (Airport airport_obj: Main.Airport_objects){
+                if (java.util.Objects.equals(airport_obj.getIATA_Code(), AirportCode)){
+                    Airport_objects = airport_obj;
+                }
+            }return Airport_objects;
+        }
+    }
+
+}
